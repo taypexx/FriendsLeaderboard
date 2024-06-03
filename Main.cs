@@ -11,7 +11,7 @@ namespace FriendsLeaderboard
         public override void OnInitializeMelon()
         {
             Load();
-            MelonLogger.Msg("FriendsLeaderboard initizlied.");
+            MelonLogger.Msg("FriendsLeaderboard initialized.");
         }
     }
 }
