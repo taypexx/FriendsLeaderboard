@@ -29,9 +29,18 @@ namespace FriendsLeaderboard
     public class Data
     {
         [TomlPrecedingComment("The list of friends usernames to be highlighted")]
-        internal string[] FriendsNames { get; set; } = {"FriendName1","FriendName2"};
+        internal string[] FriendsNames { get; set; } = { "FriendName1", "FriendName2" };
 
         [TomlPrecedingComment("The color of highlighting")]
         internal Color HighlightColor { get; set; } = new Color(0, 0.6373f, 1, 0.8f);
+
+        [TomlPrecedingComment("Your usernames")]
+        internal string[] SelfNames { get; set; } = { "YourName1", "YourName2" };
+
+        [TomlPrecedingComment("The color of highlighting for yourself")]
+        internal Color SelfColor { get; set; } = new Color(0.9f, 0f, 1f, 0.8f);
+
+        [TomlPrecedingComment("Default color of other usernames")]
+        internal Color DefaultColor { get; set; } = new Color(0.8353f, 0.7373f, 1, 0.6f);
     }
 }

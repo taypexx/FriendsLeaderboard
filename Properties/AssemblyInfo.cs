@@ -2,7 +2,7 @@
 using System.Reflection;
 using Main = FriendsLeaderboard.Main;
 
-[assembly: MelonInfo(typeof(Main), "FriendsLeaderboard", "1.0.0", "taypexx")]
+[assembly: MelonInfo(typeof(Main), "FriendsLeaderboard", "1.1.0", "taypexx")]
 [assembly: MelonGame("PeroPeroGames", "MuseDash")]
 
 [assembly: AssemblyTitle("FriendsLeaderboard")]
@@ -14,5 +14,5 @@ using Main = FriendsLeaderboard.Main;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]

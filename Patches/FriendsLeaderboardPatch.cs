@@ -7,63 +7,75 @@ using System.Threading.Tasks;
 using static FriendsLeaderboard.Save;
 using HarmonyLib;
 using UnityEngine;
+using Il2CppAssets.Scripts.PeroTools.Nice.Values;
+using MelonLoader;
 
 namespace FriendsLeaderboard.Patches
 {
+
     [HarmonyPatch(typeof(PnlRank), nameof(PnlRank.UIRefresh))]
     public class FriendsLeaderboardPatch
     {
-
         private static void Postfix()
         {
-            Color defaultColor = new Color(0.8353f, 0.7373f, 1, 0.6f);
-            Color highlightColor = Save.Data.HighlightColor;
-            string[] friendsNames = Save.Data.FriendsNames;
 
-            var rankCells = GameObject.Find("UI/Standerd/PnlPreparation/Panels/PnlRankLocalization/Pc/PnlRank/ScvRank/Viewport/Content");
+            UnityEngine.Color defaultColor = Save.Data.DefaultColor;
+            UnityEngine.Color highlightColor = Save.Data.HighlightColor;
+            UnityEngine.Color selfColor = Save.Data.SelfColor; 
+            string[] friendsNames = Save.Data.FriendsNames;
+            string[] selfNames = Save.Data.SelfNames;
+
+            var rankCells = UnityEngine.GameObject.Find("UI/Standerd/PnlPreparation/Panels/PnlRankLocalization/Pc/PnlRank/ScvRank/Viewport/Content");
 
             for (int i = 0; i < rankCells.transform.childCount; i++)
             {
-                GameObject cell = rankCells.transform.GetChild(i).gameObject;
+                UnityEngine.GameObject cell = rankCells.transform.GetChild(i).gameObject;
 
-                var nameval = cell.transform.Find("TxtIdValueS");
+                var nameval = cell.transform.Find("TxtIdValueS").gameObject.GetComponent<UnityEngine.UI.Text>();
+                var rankval = cell.transform.Find("TxtRankValueS").gameObject.GetComponent<UnityEngine.UI.Text>();
+                var scoreval = cell.transform.Find("TxtScoreValueS").gameObject.GetComponent<UnityEngine.UI.Text>();
+                var accval = cell.transform.Find("TxtAccuracyValueS").gameObject.GetComponent<UnityEngine.UI.Text>();
 
-                bool nameMatch = false;
-                string cellName = nameval.gameObject.GetComponent<UnityEngine.UI.Text>().text;
+                int nameMatch = 0;
+                string cellName = nameval.text;
 
                 for (int j = 0;j < friendsNames.Length; j++)
                 {
                     if (friendsNames[j].Equals(cellName))
                     {
-                        nameMatch = true;
+                        nameMatch = 1;
                         break;
                     }
                 }
 
-                if (nameMatch)
+                for (int j = 0; j < selfNames.Length; j++)
                 {
-                    nameval.gameObject.GetComponent<UnityEngine.UI.Text>().color = highlightColor;
+                    if (selfNames[j].Equals(cellName))
+                    {
+                        nameMatch = 2;
+                        break;
+                    }
+                }
 
-                    var rankval = cell.transform.Find("TxtRankValueS");
-                    rankval.gameObject.GetComponent<UnityEngine.UI.Text>().color = highlightColor;
-
-                    var scoreval = cell.transform.Find("TxtScoreValueS");
-                    scoreval.gameObject.GetComponent<UnityEngine.UI.Text>().color = highlightColor;
-
-                    var accval = cell.transform.Find("TxtAccuracyValueS");
-                    accval.gameObject.GetComponent<UnityEngine.UI.Text>().color = highlightColor;
+                if (nameMatch == 1)
+                {
+                    nameval.color = highlightColor;
+                    rankval.color = highlightColor;
+                    scoreval.color = highlightColor;
+                    accval.color = highlightColor;
+                }
+                else if (nameMatch == 2)
+                {
+                    nameval.color = selfColor;
+                    rankval.color = selfColor;
+                    scoreval.color = selfColor;
+                    accval.color = selfColor;
                 } else
                 {
-                    nameval.gameObject.GetComponent<UnityEngine.UI.Text>().color = defaultColor;
-
-                    var rankval = cell.transform.Find("TxtRankValueS");
-                    rankval.gameObject.GetComponent<UnityEngine.UI.Text>().color = defaultColor;
-
-                    var scoreval = cell.transform.Find("TxtScoreValueS");
-                    scoreval.gameObject.GetComponent<UnityEngine.UI.Text>().color = defaultColor;
-
-                    var accval = cell.transform.Find("TxtAccuracyValueS");
-                    accval.gameObject.GetComponent<UnityEngine.UI.Text>().color = defaultColor;
+                    nameval.color = defaultColor;
+                    rankval.color = defaultColor;
+                    scoreval.color = defaultColor;
+                    accval.color = defaultColor;
                 }
 
             } 
